@@ -37,6 +37,7 @@ namespace ASPConnectSQLServer.Controllers
             connection.Open();
             string sql = "Select count(*) from account";
 
+            
             SqlCommand com = new SqlCommand(sql, connection);
             var count = (int)com.ExecuteScalar();
 
