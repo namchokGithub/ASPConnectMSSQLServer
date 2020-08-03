@@ -42,25 +42,22 @@ namespace ASPConnectSQLServer.Controllers
             SqlCommand comUser = new SqlCommand("Select ID, Username, Password from account", connection);
             var user = comUser.ExecuteReader();
 
-            //IList<User> userlist = new List<User>();
+            List<Models.UserModel> userlist = new List<Models.UserModel>();
 
-            ArrayList arrUser = new ArrayList();
+            while (user.Read()) { 
+            
+                userlist.Add(
+                    new Models.UserModel() {
+                        Id = (int)user["ID"],
+                        Username = user["Username"].ToString(),
+                        Password = user["Password"].ToString()
+                    }
+                );
 
-            int imax=0;
-
-            while (user.Read())
-            {
-                ViewData["i"] = ++imax;
-                arrUser.Add(new User()
-                {
-                    Id = (int)user["ID"],
-                    Username = user["Username"].ToString(),
-                    Password = user["Password"].ToString()
-                }) ;
             }
 
-            ViewData["user"] = arrUser;
-            ViewData["TotalData"] = 99;
+            ViewData["user"] = userlist;
+            ViewData["TotalData"] = count;
 
             connection.Close();
 
