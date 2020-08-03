@@ -50,7 +50,7 @@ namespace ASPConnectSQLServer
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=First}/{action=Index}/{id?}");
             });
         }
     }
