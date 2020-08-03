@@ -1,0 +1,27 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    System.Collections.ArrayList _user = ViewData["user"] as System.Collections.ArrayList;
+}
+
+<h1> Indexasdaasdasda </h1>
+
+@*Show total data*@
+<h3> Total Data: @ViewData["TotalData"] </h3>
+
+<h1> @ViewData["i"]</h1>
+
+test
+<ul>
+
+    @foreach (var user in _user as IList<ASPConnectSQLServer.Controllers.FirstController.User>)
+    {
+        <li> @user.Id </li>  
+        <li> @user.Username </li>  
+        <li> @user.Password </li>  
+        <li> END </li>
+    }
+        <li> ENDOOO </li>
+
+</ul>

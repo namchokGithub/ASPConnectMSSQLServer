@@ -6,13 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
+using System.Collections;
 
 namespace ASPConnectSQLServer.Controllers
 {
     public class FirstController : Controller
     {
-        private readonly IConfiguration configuration;
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
+        internal class User
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
+        {
+            public int Id { get; set; }
+            public string Username { get; set; }
+            public string Password { get; set; }
+        }
 
+        private readonly IConfiguration configuration;
+        
         public FirstController(IConfiguration config)
         {
             this.configuration = config;
@@ -22,14 +32,35 @@ namespace ASPConnectSQLServer.Controllers
         {
             string connnectionstring = configuration.GetConnectionString("DefaultConnectionString");
 
-            SqlConnection connection = new SqlConnection("connnectionstring");
+            SqlConnection connection = new SqlConnection(connnectionstring);
 
             connection.Open();
 
             SqlCommand com = new SqlCommand("Select count(*) from account", connection);
             var count = (int)com.ExecuteScalar();
 
-            ViewData["TotalData"] = count;
+            SqlCommand comUser = new SqlCommand("Select ID, Username, Password from account", connection);
+            var user = comUser.ExecuteReader();
+
+            //IList<User> userlist = new List<User>();
+
+            ArrayList arrUser = new ArrayList();
+
+            int imax=0;
+
+            while (user.Read())
+            {
+                ViewData["i"] = ++imax;
+                arrUser.Add(new User()
+                {
+                    Id = (int)user["ID"],
+                    Username = user["Username"].ToString(),
+                    Password = user["Password"].ToString()
+                }) ;
+            }
+
+            ViewData["user"] = arrUser;
+            ViewData["TotalData"] = 99;
 
             connection.Close();
 
