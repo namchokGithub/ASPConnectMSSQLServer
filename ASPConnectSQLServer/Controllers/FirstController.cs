@@ -12,15 +12,6 @@ namespace ASPConnectSQLServer.Controllers
 {
     public class FirstController : Controller
     {
-#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
-        internal class User
-#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
-        {
-            public int Id { get; set; }
-            public string Username { get; set; }
-            public string Password { get; set; }
-        }
-
         private readonly IConfiguration configuration;
         
         public FirstController(IConfiguration config)
